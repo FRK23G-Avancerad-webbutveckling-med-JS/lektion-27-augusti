@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SecretTunnel from "./SecretTunnel";
 
 type User = {
     username: string;
@@ -8,6 +9,7 @@ type User = {
 export default function LoginForm() {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [showSecret, setShowSecret] = useState<boolean>(false);
 
     // när vi loggar in ska vi få tillbaka en token
     const handleSubmit = async (event: React.FormEvent) => {
@@ -37,24 +39,30 @@ export default function LoginForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Användarnamn:
-                <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => { setUsername(e.target.value) }}
-                ></input>
-            </label>
-            <label>
-                Lösenord:
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => { setPassword(e.target.value) }}
-                ></input>
-            </label>
-            <button type="submit">Logga in</button>
-        </form>
+        <article>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Användarnamn:
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => { setUsername(e.target.value) }}
+                    ></input>
+                </label>
+                <label>
+                    Lösenord:
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => { setPassword(e.target.value) }}
+                    ></input>
+                </label>
+                <button type="submit">Logga in</button>
+            </form>
+            <button onClick={() => setShowSecret(true)}>Visa info</button>
+            {
+                showSecret ? <SecretTunnel /> : null
+            }
+        </article>
     )
 }
